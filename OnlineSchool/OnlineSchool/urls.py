@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from course.api import CourseResource, ChapterResource
+from course.api import CourseResource, ChapterResource, VideoResource, ContentVideoResource, ContentQuestionResource
 from tastypie.api import Api
 
 v1_api = Api(api_name='v1')
 v1_api.register(CourseResource())
 v1_api.register(ChapterResource())
+v1_api.register(VideoResource())
+v1_api.register(ContentVideoResource())
+v1_api.register(ContentQuestionResource())
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(v1_api.urls)),
