@@ -49,10 +49,11 @@ class ChapterResource(ModelResource):
 
     class Meta:
         authorization = Authorization()
-        queryset = Chapter.objects.all().select_related('course')
+        queryset = Chapter.objects.all().order_by('weekNumber').select_related('course')
         resource_name = 'chapter'
         filtering = {
             'course': ALL_WITH_RELATIONS,
+            'weekNumber': ALL,
         }
 
 class ContentVideoResource(ModelResource):
@@ -61,11 +62,10 @@ class ContentVideoResource(ModelResource):
 
     class Meta:
         authorization = Authorization()
-        queryset = ContentVideo.objects.all().order_by('weekNumber', 'orderPosition').select_related('chapter')
+        queryset = ContentVideo.objects.all().order_by('orderPosition').select_related('chapter')
         resource_name = 'contentVideo'
         filtering = {
             'chapter': ALL_WITH_RELATIONS,
-            'weekNumber': ALL,
         }
 
 class ContentQuestionResource(ModelResource):
@@ -73,9 +73,8 @@ class ContentQuestionResource(ModelResource):
 
     class Meta:
         authorization = Authorization()
-        queryset = ContentQuestion.objects.all().order_by('weekNumber', 'orderPosition').select_related('chapter')
+        queryset = ContentQuestion.objects.all().order_by( 'orderPosition').select_related('chapter')
         resource_name = 'contentQuestion'
         filtering = {
             'chapter': ALL_WITH_RELATIONS,
-            'weekNumber': ALL,
         }
